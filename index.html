@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>هوية تحقق - أثمار مهدي حسن</title>
     
-    <!-- Google Fonts: استخدام خط Cairo لمظهر عصري -->
+    <!-- Google Fonts: استخدام خط Cairo -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -24,14 +24,8 @@
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         body {
@@ -63,10 +57,12 @@
             align-items: center;
         }
 
+        /* === التحكم بحجم الشعارات في الرأس === */
         .card-header img {
             max-height: 45px;
-            object-fit: contain;
-            filter: brightness(0) invert(1); /* جعل الشعار باللون الأبيض ليتناسب مع الخلفية */
+            max-width: 100px; /* حد أقصى للعرض لمنع شعار من أن يكون عريضاً جداً */
+            object-fit: contain; /* أهم خاصية لعرض الصورة كاملة دون تشويه */
+            filter: brightness(0) invert(1);
         }
         
         .project-title-wrapper {
@@ -82,40 +78,35 @@
         }
 
         .card-body {
-            padding: 25px;
+            padding: 30px 25px;
             text-align: center;
-            position: relative;
-        }
-        
-        .employee-photo-wrapper {
-             margin-top: -90px;
-             position: relative;
-             display: inline-block;
-        }
-
-        .employee-photo {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 6px solid var(--card-bg-color);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
 
         .employee-name {
-            font-size: 2em;
+            font-size: 2.1em;
             font-weight: 700;
             color: var(--text-color-dark);
-            margin: 20px 0 5px 0;
+            margin-bottom: 15px;
         }
 
+        /* === التحكم بحجم صورة الموظف === */
+        .employee-photo {
+            width: 160px;   /* حجم منقح */
+            height: 160px;  /* حجم منقح */
+            border-radius: 50%;
+            object-fit: cover; /* الأفضل للصور الشخصية لملء الدائرة بالكامل */
+            border: 6px solid var(--bg-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
         .employee-job-title {
             font-size: 1.25em;
             color: var(--primary-color);
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
         }
-
+        
         .info-section {
             display: flex;
             justify-content: center;
@@ -128,26 +119,15 @@
             background-color: #f8f9fa;
             border: 1px solid #e9ecef;
             padding: 10px 20px;
-            border-radius: 50px; /* شكل الحبة Pill shape */
+            border-radius: 50px;
             font-size: 0.9em;
             display: flex;
             align-items: center;
         }
         
-        .info-item i {
-            color: var(--primary-color);
-            margin-left: 8px;
-            font-size: 1.1em;
-        }
-
-        .info-item span {
-            color: var(--text-color-light);
-            font-weight: 600;
-        }
-        .info-item strong {
-            color: var(--text-color-dark);
-            margin-right: 5px;
-        }
+        .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
+        .info-item span { color: var(--text-color-light); font-weight: 600; }
+        .info-item strong { color: var(--text-color-dark); margin-right: 5px; }
         
         .auth-section {
             text-align: center;
@@ -156,73 +136,50 @@
             border-radius: 12px;
             margin-bottom: 30px;
         }
+        
+        .auth-section h3 { margin: 0 0 10px 0; font-size: 1.1em; color: var(--primary-color); }
+        .auth-section p { margin: 0; font-size: 1em; line-height: 1.8; color: var(--text-color-dark); }
+        
+        .signatures { display: flex; justify-content: space-around; align-items: center; }
 
-        .auth-section h3 {
-            margin: 0 0 10px 0;
-            font-size: 1.1em;
-            color: var(--primary-color);
-        }
-
-        .auth-section p {
-            margin: 0;
-            font-size: 1em;
-            line-height: 1.8;
-            color: var(--text-color-dark);
-        }
-
-        .signatures {
-            display: flex;
-            justify-content: space-around;
-        }
-
+        /* === التحكم بحجم صور التواقيع === */
         .signature-block img {
-            max-height: 55px;
+            max-height: 55px; /* حد أقصى لارتفاع التوقيع */
+            max-width: 120px;  /* حد أقصى لعرض التوقيع */
+            object-fit: contain; /* لعرض التوقيع كاملاً بدون قص أو تشويه */
             margin-bottom: 8px;
         }
-
-        .signature-block p {
-            font-size: 0.85em;
-            font-weight: 600;
-        }
+        .signature-block p { font-size: 0.85em; font-weight: 600; }
 
         .card-footer {
             background-color: #f8f9fa;
             border-top: 1px solid #e9ecef;
-            padding: 15px;
+            padding: 20px 15px;
             text-align: center;
         }
-        
-        .card-footer a {
-            color: var(--text-color-light);
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
-        
-        .card-footer a:hover {
-            color: var(--primary-color);
-        }
+        .contact-info { margin-bottom: 15px; }
+        .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; transition: color 0.3s; }
+        .contact-info a:hover { color: var(--primary-color); }
+        .credits { font-size: 0.8em; color: #aaa; margin: 0; }
+        .credits p { margin: 0; }
+
     </style>
 </head>
 <body>
 
     <div class="profile-card">
         <header class="card-header">
-            <img src="company_logo.png" alt="شعار الشركة">
+            <img src="co.png" alt="شعار الشركة">
             <div class="project-title-wrapper">
                 <h2>مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</h2>
             </div>
-            <img src="ministry_logo.png" alt="شعار وزارة الكهرباء">
+            <img src="min.png" alt="شعار وزارة الكهرباء">
         </header>
 
         <main class="card-body">
-            <div class="employee-photo-wrapper">
-                <!-- يمكنك تغيير اسم ملف الصورة هنا، ولكن يفضل تغييره عبر الرابط -->
-                <img id="employee-photo" class="employee-photo" src="e.g., athmar.png" alt="صورة الموظف">
-            </div>
             
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
+            <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
             
             <section class="info-section">
@@ -234,7 +191,7 @@
                     <i class="fa-solid fa-building-user"></i>
                     <span>القسم: <strong id="employee-dept">مبيعات الطاقة</strong></span>
                 </div>
-                 <div class="info-item" id="expiry-date-item">
+                 <div class="info-item" id="expiry-date-item" style="display: none;">
                     <i class="fa-solid fa-calendar-xmark"></i>
                     <span>نفاذ الهوية: <strong id="employee-exp"></strong></span>
                 </div>
@@ -247,27 +204,31 @@
             
             <section class="signatures">
                 <div class="signature-block">
-                    <img src="director_signature.png" alt="توقيع المدير">
+                    <img src="admin.png" alt="توقيع المدير">
                     <p>مدير الشركة</p>
                 </div>
                 <div class="signature-block">
-                    <img src="resident_eng_signature.png" alt="توقيع المهندس المقيم">
+                    <img src="eng.png" alt="توقيع المهندس المقيم">
                     <p>دائرة المهندس المقيم</p>
                 </div>
             </section>
         </main>
         
         <footer class="card-footer">
-             <a href="tel:[+964000000000]"><i class="fa-solid fa-phone"></i> [07734037190 ]</a>
-             <a href="mailto:[info@company.com]"><i class="fa-solid fa-envelope"></i> [emada3170@gmail.com ]</a>
+            <div class="contact-info">
+                 <a href="tel:07734037190"><i class="fa-solid fa-phone"></i> 07734037190</a>
+                 <a href="mailto:emada3170@gmail.com"><i class="fa-solid fa-envelope"></i> emada3170@gmail.com</a>
+            </div>
+            <div class="credits">
+                <p>برمجة وتصميم: م. عماد علي العتابي</p>
+            </div>
         </footer>
     </div>
 
-    <!-- كود الجافاسكربت الديناميكي (يعمل إذا تم توفير بيانات في الرابط) -->
+    <!-- كود الجافاسكربت الديناميكي (لا تغيير عليه) -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const params = new URLSearchParams(window.location.search);
-
             const data = {
                 name: params.get('name'),
                 title: params.get('title'),
@@ -276,28 +237,21 @@
                 dept: params.get('dept'),
                 exp: params.get('exp')
             };
-
             const setContent = (id, content) => {
                 const element = document.getElementById(id);
                 if (element && content) element.innerHTML = content;
             };
-
             const setAttribute = (id, attr, value) => {
                 const element = document.getElementById(id);
                 if (element && value) element.setAttribute(attr, value);
             }
-            
-            // إذا كان هناك بيانات في الرابط، قم بتحديث الصفحة
-            // وإلا، ستبقى البيانات الافتراضية (أثمار مهدي حسن) ظاهرة
             if (data.name) setContent('employee-name', data.name);
             if (data.title) setContent('employee-job-title', data.title);
             if (data.id) setContent('employee-id', data.id);
             if (data.dept) setContent('employee-dept', data.dept);
             if (data.exp) {
                 setContent('employee-exp', data.exp);
-                document.getElementById('expiry-date-item').style.display = 'flex'; // إظهار تاريخ النفاذ فقط اذا كان موجودا
-            } else {
-                 document.getElementById('expiry-date-item').style.display = 'none'; // إخفاؤه اذا لم يكن موجودا
+                document.getElementById('expiry-date-item').style.display = 'flex';
             }
             if (data.photo) setAttribute('employee-photo', 'src', data.photo);
             if(params.has('name')) document.title = `هوية تحقق - ${data.name}`;
