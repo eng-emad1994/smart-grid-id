@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هوية تحقق - أثمار مهدي حسن</title>
+    
+    <!-- Google Fonts: استخدام خط Cairo لمظهر عصري -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome: مكتبة الأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --text-color-dark: #2c3e50;
+            --text-color-light: #555;
+            --bg-color: #e9ecef;
+            --card-bg-color: #ffffff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .profile-card {
+            background-color: var(--card-bg-color);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(44, 62, 80, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 480px;
+            width: 100%;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header img {
+            max-height: 45px;
+            object-fit: contain;
+            filter: brightness(0) invert(1); /* جعل الشعار باللون الأبيض ليتناسب مع الخلفية */
+        }
+        
+        .project-title-wrapper {
+             color: white;
+             text-align: center;
+             padding: 0 10px;
+        }
+
+        .project-title-wrapper h2 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .employee-photo-wrapper {
+             margin-top: -90px;
+             position: relative;
+             display: inline-block;
+        }
+
+        .employee-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--card-bg-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .employee-name {
+            font-size: 2em;
+            font-weight: 700;
+            color: var(--text-color-dark);
+            margin: 20px 0 5px 0;
+        }
+
+        .employee-job-title {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 30px;
+        }
+
+        .info-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .info-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 10px 20px;
+            border-radius: 50px; /* شكل الحبة Pill shape */
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-item i {
+            color: var(--primary-color);
+            margin-left: 8px;
+            font-size: 1.1em;
+        }
+
+        .info-item span {
+            color: var(--text-color-light);
+            font-weight: 600;
+        }
+        .info-item strong {
+            color: var(--text-color-dark);
+            margin-right: 5px;
+        }
+        
+        .auth-section {
+            text-align: center;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .auth-section h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.1em;
+            color: var(--primary-color);
+        }
+
+        .auth-section p {
+            margin: 0;
+            font-size: 1em;
+            line-height: 1.8;
+            color: var(--text-color-dark);
+        }
+
+        .signatures {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .signature-block img {
+            max-height: 55px;
+            margin-bottom: 8px;
+        }
+
+        .signature-block p {
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .card-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .card-footer a {
+            color: var(--text-color-light);
+            text-decoration: none;
+            margin: 0 10px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .card-footer a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="profile-card">
+        <header class="card-header">
+            <img src="company_logo.png" alt="شعار الشركة">
+            <div class="project-title-wrapper">
+                <h2>مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</h2>
+            </div>
+            <img src="ministry_logo.png" alt="شعار وزارة الكهرباء">
+        </header>
+
+        <main class="card-body">
+            <div class="employee-photo-wrapper">
+                <!-- يمكنك تغيير اسم ملف الصورة هنا، ولكن يفضل تغييره عبر الرابط -->
+                <img id="employee-photo" class="employee-photo" src="e.g., athmar.png" alt="صورة الموظف">
+            </div>
+            
+            <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
+            <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
+            
+            <section class="info-section">
+                <div class="info-item">
+                    <i class="fa-solid fa-id-card-clip"></i>
+                    <span>الرقم الوظيفي: <strong id="employee-id">1994</strong></span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-building-user"></i>
+                    <span>القسم: <strong id="employee-dept">مبيعات الطاقة</strong></span>
+                </div>
+                 <div class="info-item" id="expiry-date-item">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <span>نفاذ الهوية: <strong id="employee-exp"></strong></span>
+                </div>
+            </section>
+            
+            <section class="auth-section">
+                <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3>
+                <p>بموجب هذا، نؤكد أن حامل الهوية مخول من قبل <strong>شركة توزيع كهرباء الوسط - دائرة المهندس المقيم</strong>، ونرجو من كافة الجهات المعنية تسهيل جميع الأمور المتعلقة بإنجاز مهام عمله.</p>
+            </section>
+            
+            <section class="signatures">
+                <div class="signature-block">
+                    <img src="director_signature.png" alt="توقيع المدير">
+                    <p>مدير الشركة</p>
+                </div>
+                <div class="signature-block">
+                    <img src="resident_eng_signature.png" alt="توقيع المهندس المقيم">
+                    <p>دائرة المهندس المقيم</p>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="card-footer">
+             <a href="tel:[+964000000000]"><i class="fa-solid fa-phone"></i> [07734037190 ]</a>
+             <a href="mailto:[info@company.com]"><i class="fa-solid fa-envelope"></i> [emada3170@gmail.com ]</a>
+        </footer>
+    </div>
+
+    <!-- كود الجافاسكربت الديناميكي (يعمل إذا تم توفير بيانات في الرابط) -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = new URLSearchParams(window.location.search);
+
+            const data = {
+                name: params.get('name'),
+                title: params.get('title'),
+                photo: params.get('photo'),
+                id: params.get('id'),
+                dept: params.get('dept'),
+                exp: params.get('exp')
+            };
+
+            const setContent = (id, content) => {
+                const element = document.getElementById(id);
+                if (element && content) element.innerHTML = content;
+            };
+
+            const setAttribute = (id, attr, value) => {
+                const element = document.getElementById(id);
+                if (element && value) element.setAttribute(attr, value);
+            }
+            
+            // إذا كان هناك بيانات في الرابط، قم بتحديث الصفحة
+            // وإلا، ستبقى البيانات الافتراضية (أثمار مهدي حسن) ظاهرة
+            if (data.name) setContent('employee-name', data.name);
+            if (data.title) setContent('employee-job-title', data.title);
+            if (data.id) setContent('employee-id', data.id);
+            if (data.dept) setContent('employee-dept', data.dept);
+            if (data.exp) {
+                setContent('employee-exp', data.exp);
+                document.getElementById('expiry-date-item').style.display = 'flex'; // إظهار تاريخ النفاذ فقط اذا كان موجودا
+            } else {
+                 document.getElementById('expiry-date-item').style.display = 'none'; // إخفاؤه اذا لم يكن موجودا
+            }
+            if (data.photo) setAttribute('employee-photo', 'src', data.photo);
+            if(params.has('name')) document.title = `هوية تحقق - ${data.name}`;
+        });
+    </script>
+</body>
+</html>
