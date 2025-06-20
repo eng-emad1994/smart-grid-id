@@ -14,11 +14,12 @@
     <style>
         :root {
             --primary-color: #0056b3;
-            --secondary-color: #007bff;
+            --secondary-color: #2c3e50; /* لون أغمق للنصوص الرئيسية */
             --text-color-dark: #2c3e50;
             --text-color-light: #555;
             --bg-color: #e9ecef;
             --card-bg-color: #ffffff;
+            --header-bg-color: #f8f9fa; /* لون خلفية خفيف للرأس */
         }
 
         @keyframes fadeIn {
@@ -39,39 +40,56 @@
 
         .profile-card {
             background-color: var(--card-bg-color);
-            border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(44, 62, 80, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
-            max-width: 480px;
+            border-radius: 16px; /* حواف أقل دائرية لتبدو رسمية أكثر */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
             width: 100%;
             overflow: hidden;
             animation: fadeIn 0.8s ease-out;
         }
 
+        /* ===== الرأس بالتصميم الرسمي الجديد ===== */
         .card-header {
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-            padding: 20px;
+            background-color: var(--header-bg-color);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .logos-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-        }
-
-        .card-header img {
-            max-height: 45px;
-            max-width: 100px;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
+            margin-bottom: 20px;
         }
         
-        .project-title-wrapper {
-             color: white;
-             text-align: center;
-             padding: 0 10px;
+        .logos-container img {
+            max-height: 55px; /* يمكن زيادة الحجم قليلاً */
+            max-width: 120px;
+            object-fit: contain;
+            /* تم حذف الفلتر الأبيض */
+        }
+        
+        .header-text h4, .header-text h3, .header-text h2 {
+            margin: 4px 0;
+            color: var(--text-color-dark);
         }
 
-        .project-title-wrapper h2 {
-            margin: 0;
-            font-size: 0.95rem;
+        .header-text h4 { /* وزارة الكهرباء */
+            font-size: 0.9em;
+            font-weight: 400;
+            color: var(--text-color-light);
+        }
+
+        .header-text h3 { /* الشركة العامة */
+            font-size: 1.05em;
+            font-weight: 600;
+        }
+
+        .header-text h2 { /* اسم المشروع */
+            font-size: 1.2em;
             font-weight: 700;
+            color: var(--primary-color);
         }
 
         .card-body {
@@ -112,7 +130,7 @@
         }
 
         .info-item {
-            background-color: #f8f9fa;
+            background-color: var(--header-bg-color);
             border: 1px solid #e9ecef;
             padding: 10px 20px;
             border-radius: 50px;
@@ -122,28 +140,13 @@
         }
         
         .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
-        .info-item span { color: var(--text-color-light); font-weight: 600; }
-        .info-item strong { color: var(--text-color-dark); margin-right: 5px; }
+        .info-item span, .info-item strong { color: var(--text-color-dark); }
         
-        .auth-section {
-            text-align: center;
-            padding: 25px;
-            background-color: #f8f9fa;
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-        
+        .auth-section { text-align: center; padding: 25px; background-color: var(--header-bg-color); border-radius: 12px; margin-bottom: 30px; }
         .auth-section h3 { margin: 0 0 10px 0; font-size: 1.1em; color: var(--primary-color); }
         .auth-section p { margin: 0; font-size: 1em; line-height: 1.8; color: var(--text-color-dark); }
-        
         .signatures { display: flex; justify-content: space-around; align-items: center; }
-
-        .signature-block img {
-            max-height: 55px;
-            max-width: 120px;
-            object-fit: contain;
-            margin-bottom: 8px;
-        }
+        .signature-block img { max-height: 55px; max-width: 120px; object-fit: contain; margin-bottom: 8px; }
         .signature-block p { font-size: 0.85em; font-weight: 600; }
 
         .card-footer {
@@ -152,10 +155,26 @@
             padding: 20px 15px;
             text-align: center;
         }
-        .contact-info { margin-bottom: 15px; }
-        .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; transition: color 0.3s; }
-        .contact-info a:hover { color: var(--primary-color); }
-        .credits { font-size: 0.8em; color: #aaa; margin: 0; }
+        .contact-info {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef; /* خط فاصل */
+        }
+        .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; }
+
+        .verification-notice {
+            margin-bottom: 15px;
+        }
+        .verification-notice p {
+            margin: 0;
+            font-size: 0.9em;
+            color: var(--text-color-dark);
+            line-height: 1.6;
+        }
+        .credits {
+            font-size: 0.8em;
+            color: #aaa;
+        }
         .credits p { margin: 0; }
     </style>
 </head>
@@ -163,15 +182,19 @@
 
     <div class="profile-card">
         <header class="card-header">
-            <img src="co.png" alt="شعار الشركة">
-            <div class="project-title-wrapper">
+            <div class="logos-container">
+                <img src="co.png" alt="شعار شركة كهرباء الوسط">
+                <img src="min.png" alt="شعار وزارة الكهرباء">
+            </div>
+            <div class="header-text">
+                <h4>جمهورية العراق - وزارة الكهرباء</h4>
+                <h3>الشركة العامة لتوزيع كهرباء الوسط</h3>
                 <h2>مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</h2>
             </div>
-            <img src="min.png" alt="شعار وزارة الكهرباء">
         </header>
 
         <main class="card-body">
-            
+            <!-- البيانات الافتراضية هنا -->
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
             <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
@@ -213,6 +236,13 @@
                  <a href="tel:07734037190"><i class="fa-solid fa-phone"></i> 07734037190</a>
                  <a href="mailto:emada3170@gmail.com"><i class="fa-solid fa-envelope"></i> emada3170@gmail.com</a>
             </div>
+            <div class="verification-notice">
+                <p>
+                    <i class="fa-solid fa-circle-check" style="color: #28a745;"></i>
+                    هذه الهوية الرقمية موثقة ومعتمدة ضمن سجلات:<br>
+                    <b>شركة قلعة الطارق - مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</b>
+                </p>
+            </div>
             <div class="credits">
                 <p>برمجة وتصميم: م. عماد علي العتابي</p>
             </div>
@@ -221,33 +251,50 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // بيانات الموظف الافتراضي، تم تعديلها هنا
+            const defaultData = {
+                name: "أثمار مهدي حسن",
+                title: "قارئ مقياس - عداد",
+                id: "1994",
+                dept: "مبيعات الطاقة",
+                exp: null, // لا يوجد تاريخ نفاذ افتراضي
+                photo: "at.png"
+            };
+
             const params = new URLSearchParams(window.location.search);
             const data = {
-                name: params.get('name'),
-                title: params.get('title'),
-                photo: params.get('photo'),
-                id: params.get('id'),
-                dept: params.get('dept'),
-                exp: params.get('exp')
+                name: params.get('name') || defaultData.name,
+                title: params.get('title') || defaultData.title,
+                photo: params.get('photo') || defaultData.photo,
+                id: params.get('id') || defaultData.id,
+                dept: params.get('dept') || defaultData.dept,
+                exp: params.get('exp') || defaultData.exp
             };
+
             const setContent = (id, content) => {
                 const element = document.getElementById(id);
                 if (element && content) element.innerHTML = content;
             };
+
             const setAttribute = (id, attr, value) => {
                 const element = document.getElementById(id);
                 if (element && value) element.setAttribute(attr, value);
             }
-            if (data.name) setContent('employee-name', data.name);
-            if (data.title) setContent('employee-job-title', data.title);
-            if (data.id) setContent('employee-id', data.id);
-            if (data.dept) setContent('employee-dept', data.dept);
+            
+            setContent('employee-name', data.name);
+            setContent('employee-job-title', data.title);
+            setContent('employee-id', data.id);
+            setContent('employee-dept', data.dept);
+            
             if (data.exp) {
                 setContent('employee-exp', data.exp);
                 document.getElementById('expiry-date-item').style.display = 'flex';
+            } else {
+                 document.getElementById('expiry-date-item').style.display = 'none';
             }
-            if (data.photo) setAttribute('employee-photo', 'src', data.photo);
-            if(params.has('name')) document.title = `هوية تحقق - ${data.name}`;
+            
+            setAttribute('employee-photo', 'src', data.photo);
+            document.title = `هوية تحقق - ${data.name}`;
         });
     </script>
 </body>
