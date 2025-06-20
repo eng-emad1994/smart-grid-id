@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     
     <style>
-        /* كل هذا القسم لا يحتاج إلى تعديل، اتركه كما هو */
         :root {
             --primary-color: #0056b3;
             --secondary-color: #007bff;
@@ -21,10 +20,12 @@
             --bg-color: #e9ecef;
             --card-bg-color: #ffffff;
         }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
         body {
             font-family: 'Cairo', sans-serif;
             background-color: var(--bg-color);
@@ -35,6 +36,7 @@
             align-items: center;
             min-height: 100vh;
         }
+
         .profile-card {
             background-color: var(--card-bg-color);
             border-radius: 24px;
@@ -44,6 +46,7 @@
             overflow: hidden;
             animation: fadeIn 0.8s ease-out;
         }
+
         .card-header {
             background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             padding: 20px;
@@ -51,24 +54,38 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .card-header img {
             max-height: 45px;
             max-width: 100px;
             object-fit: contain;
             filter: brightness(0) invert(1);
         }
+        
         .project-title-wrapper {
              color: white;
              text-align: center;
              padding: 0 10px;
         }
+
         .project-title-wrapper h2 {
             margin: 0;
             font-size: 0.95rem;
             font-weight: 700;
         }
-        .card-body { padding: 30px 25px; text-align: center; }
-        .employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
+
+        .card-body {
+            padding: 30px 25px;
+            text-align: center;
+        }
+
+        .employee-name {
+            font-size: 2.1em;
+            font-weight: 700;
+            color: var(--text-color-dark);
+            margin-bottom: 15px;
+        }
+
         .employee-photo {
             width: 160px;
             height: 160px;
@@ -78,8 +95,22 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
             margin-bottom: 15px;
         }
-        .employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
-        .info-section { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
+        
+        .employee-job-title {
+            font-size: 1.25em;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+        
+        .info-section {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
         .info-item {
             background-color: #f8f9fa;
             border: 1px solid #e9ecef;
@@ -89,13 +120,24 @@
             display: flex;
             align-items: center;
         }
+        
         .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
         .info-item span { color: var(--text-color-light); font-weight: 600; }
         .info-item strong { color: var(--text-color-dark); margin-right: 5px; }
-        .auth-section { text-align: center; padding: 25px; background-color: #f8f9fa; border-radius: 12px; margin-bottom: 30px; }
+        
+        .auth-section {
+            text-align: center;
+            padding: 25px;
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
         .auth-section h3 { margin: 0 0 10px 0; font-size: 1.1em; color: var(--primary-color); }
         .auth-section p { margin: 0; font-size: 1em; line-height: 1.8; color: var(--text-color-dark); }
+        
         .signatures { display: flex; justify-content: space-around; align-items: center; }
+
         .signature-block img {
             max-height: 55px;
             max-width: 120px;
@@ -103,7 +145,13 @@
             margin-bottom: 8px;
         }
         .signature-block p { font-size: 0.85em; font-weight: 600; }
-        .card-footer { background-color: #f8f9fa; border-top: 1px solid #e9ecef; padding: 20px 15px; text-align: center; }
+
+        .card-footer {
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            padding: 20px 15px;
+            text-align: center;
+        }
         .contact-info { margin-bottom: 15px; }
         .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; transition: color 0.3s; }
         .contact-info a:hover { color: var(--primary-color); }
@@ -115,24 +163,17 @@
 
     <div class="profile-card">
         <header class="card-header">
-            <!-- 1. ضع اسم ملف شعار الشركة الجديد هنا -->
-            <img src="[اسم-شعار-الشركة-الجديد.png]" alt="شعار الشركة">
-            
+            <img src="co.png" alt="شعار الشركة">
             <div class="project-title-wrapper">
                 <h2>مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</h2>
             </div>
-            
-            <!-- 2. ضع اسم ملف شعار الوزارة الجديد هنا -->
-            <img src="[اسم-شعار-الوزارة-الجديد.png]" alt="شعار وزارة الكهرباء">
+            <img src="min.png" alt="شعار وزارة الكهرباء">
         </header>
 
         <main class="card-body">
             
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
-            
-            <!-- 3. ضع اسم صورة الموظف الافتراضية الجديدة هنا -->
-            <img id="employee-photo" class="employee-photo" src="[اسم-الصورة-الشخصية-الجديدة.png]" alt="صورة الموظف">
-            
+            <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
             
             <section class="info-section">
@@ -157,13 +198,11 @@
             
             <section class="signatures">
                 <div class="signature-block">
-                    <!-- 4. ضع اسم ملف توقيع المدير الجديد هنا -->
-                    <img src="[اسم-توقيع-المدير-الجديد.png]" alt="توقيع المدير">
+                    <img src="admin.png" alt="توقيع المدير">
                     <p>مدير الشركة</p>
                 </div>
                 <div class="signature-block">
-                    <!-- 5. ضع اسم ملف توقيع المهندس الجديد هنا -->
-                    <img src="[اسم-توقيع-المهندس-الجديد.png]" alt="توقيع المهندس المقيم">
+                    <img src="eng.png" alt="توقيع المهندس المقيم">
                     <p>دائرة المهندس المقيم</p>
                 </div>
             </section>
@@ -181,7 +220,6 @@
     </div>
 
     <script>
-        // هذا الجزء لا يحتاج أي تعديل
         document.addEventListener("DOMContentLoaded", function() {
             const params = new URLSearchParams(window.location.search);
             const data = {
