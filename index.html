@@ -5,141 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>هوية تحقق الموظف</title>
     
+    <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     
     <style>
-        /* CSS Code - No changes needed */
-        :root { --primary-color: #0056b3; --text-color-dark: #2c3e50; --bg-color: #e9ecef; --card-bg-color: #ffffff; }
-        body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .profile-card { background-color: var(--card-bg-color); border-radius: 24px; box-shadow: 0 15px 35px rgba(44, 62, 80, 0.1); max-width: 480px; width: 100%; text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
-        .profile-card.visible { opacity: 1; transform: translateY(0); }
-        .card-header { background: linear-gradient(135deg, var(--primary-color) 0%, #007bff 100%); padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-        .card-header img { max-height: 45px; max-width: 100px; object-fit: contain; filter: brightness(0) invert(1); }
-        .project-title-wrapper h2 { margin: 0; font-size: 0.95rem; font-weight: 700; color: white; }
-        .card-body { padding: 30px 25px; }
-        h1#employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
-        .employee-photo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 6px solid var(--bg-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px; background-color: #eee; }
-        p#employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
+        /* كل هذا القسم لا يحتاج إلى تعديل، اتركه كما هو */
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #007bff;
+            --text-color-dark: #2c3e50;
+            --text-color-light: #555;
+            --bg-color: #e9ecef;
+            --card-bg-color: #ffffff;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .profile-card {
+            background-color: var(--card-bg-color);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(44, 62, 80, 0.1), 0 5px 15px rgba(0, 0, 0, 0.05);
+            max-width: 480px;
+            width: 100%;
+            overflow: hidden;
+            animation: fadeIn 0.8s ease-out;
+        }
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .card-header img {
+            max-height: 45px;
+            max-width: 100px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+        .project-title-wrapper {
+             color: white;
+             text-align: center;
+             padding: 0 10px;
+        }
+        .project-title-wrapper h2 {
+            margin: 0;
+            font-size: 0.95rem;
+            font-weight: 700;
+        }
+        .card-body { padding: 30px 25px; text-align: center; }
+        .employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
+        .employee-photo {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--bg-color);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        .employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
         .info-section { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
-        .info-item { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 10px 20px; border-radius: 50px; font-size: 0.9em; display: flex; align-items: center; }
+        .info-item {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+        }
         .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
-        .info-item span, .info-item strong { font-weight: 600; }
-        .auth-section { text-align: right; padding: 25px; background-color: #f8f9fa; border-radius: 12px; margin-bottom: 30px; }
-        .auth-section h3 { margin: 0 0 10px 0; font-size: 1.1em; color: var(--primary-color); text-align: center; }
+        .info-item span { color: var(--text-color-light); font-weight: 600; }
+        .info-item strong { color: var(--text-color-dark); margin-right: 5px; }
+        .auth-section { text-align: center; padding: 25px; background-color: #f8f9fa; border-radius: 12px; margin-bottom: 30px; }
+        .auth-section h3 { margin: 0 0 10px 0; font-size: 1.1em; color: var(--primary-color); }
         .auth-section p { margin: 0; font-size: 1em; line-height: 1.8; color: var(--text-color-dark); }
         .signatures { display: flex; justify-content: space-around; align-items: center; }
-        .signature-block img { max-height: 55px; max-width: 120px; object-fit: contain; margin-bottom: 8px; }
+        .signature-block img {
+            max-height: 55px;
+            max-width: 120px;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
         .signature-block p { font-size: 0.85em; font-weight: 600; }
         .card-footer { background-color: #f8f9fa; border-top: 1px solid #e9ecef; padding: 20px 15px; text-align: center; }
         .contact-info { margin-bottom: 15px; }
-        .contact-info a { color: #555; text-decoration: none; margin: 0 10px; font-weight: 600; }
+        .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; transition: color 0.3s; }
+        .contact-info a:hover { color: var(--primary-color); }
         .credits { font-size: 0.8em; color: #aaa; margin: 0; }
         .credits p { margin: 0; }
-        .loader { font-size: 1.2em; color: var(--primary-color); padding: 50px; }
     </style>
 </head>
 <body>
-    <div id="profile-card" class="profile-card">
+
+    <div class="profile-card">
         <header class="card-header">
-            <img src="co.png" alt="شعار الشركة"><div class="project-title-wrapper"><h2>مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</h2></div><img src="min.png" alt="شعار وزارة الكهرباء">
+            <!-- 1. ضع اسم ملف شعار الشركة الجديد هنا -->
+            <img src="[اسم-شعار-الشركة-الجديد.png]" alt="شعار الشركة">
+            
+            <div class="project-title-wrapper">
+                <h2>مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</h2>
+            </div>
+            
+            <!-- 2. ضع اسم ملف شعار الوزارة الجديد هنا -->
+            <img src="[اسم-شعار-الوزارة-الجديد.png]" alt="شعار وزارة الكهرباء">
         </header>
+
         <main class="card-body">
-            <div id="loader" class="loader">
-                <i class="fas fa-spinner fa-spin"></i><p>جاري تحميل البيانات...</p>
-            </div>
-            <div id="employee-content" style="display: none;">
-                <h1 id="employee-name"></h1><img id="employee-photo" class="employee-photo" src="" alt="صورة الموظف"><p id="employee-job-title"></p>
-                <section class="info-section">
-                    <div class="info-item"><i class="fa-solid fa-id-card-clip"></i><span>الرقم الوظيفي: <strong id="employee-id"></strong></span></div>
-                    <div class="info-item"><i class="fa-solid fa-building-user"></i><span>القسم: <strong id="department-name"></strong></span></div>
-                </section>
-                <section class="auth-section">
-                    <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3><p id="auth-text-placeholder"></p> 
-                </section>
-                <section class="signatures">
-                    <div class="signature-block"><img src="admin.png" alt="توقيع المدير"><p>مدير الشركة</p></div>
-                    <div class="signature-block"><img src="eng.png" alt="توقيع المهندس المقيم"><p>دائرة المهندس المقيم</p></div>
-                </section>
-            </div>
+            
+            <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
+            
+            <!-- 3. ضع اسم صورة الموظف الافتراضية الجديدة هنا -->
+            <img id="employee-photo" class="employee-photo" src="[اسم-الصورة-الشخصية-الجديدة.png]" alt="صورة الموظف">
+            
+            <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
+            
+            <section class="info-section">
+                <div class="info-item">
+                    <i class="fa-solid fa-id-card-clip"></i>
+                    <span>الرقم الوظيفي: <strong id="employee-id">1994</strong></span>
+                </div>
+                <div class="info-item">
+                    <i class="fa-solid fa-building-user"></i>
+                    <span>القسم: <strong id="employee-dept">مبيعات الطاقة</strong></span>
+                </div>
+                 <div class="info-item" id="expiry-date-item" style="display: none;">
+                    <i class="fa-solid fa-calendar-xmark"></i>
+                    <span>نفاذ الهوية: <strong id="employee-exp"></strong></span>
+                </div>
+            </section>
+            
+            <section class="auth-section">
+                <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3>
+                <p>بموجب هذا، نؤكد أن حامل الهوية مخول من قبل <strong>شركة توزيع كهرباء الوسط - دائرة المهندس المقيم</strong>، ونرجو من كافة الجهات المعنية تسهيل جميع الأمور المتعلقة بإنجاز مهام عمله.</p>
+            </section>
+            
+            <section class="signatures">
+                <div class="signature-block">
+                    <!-- 4. ضع اسم ملف توقيع المدير الجديد هنا -->
+                    <img src="[اسم-توقيع-المدير-الجديد.png]" alt="توقيع المدير">
+                    <p>مدير الشركة</p>
+                </div>
+                <div class="signature-block">
+                    <!-- 5. ضع اسم ملف توقيع المهندس الجديد هنا -->
+                    <img src="[اسم-توقيع-المهندس-الجديد.png]" alt="توقيع المهندس المقيم">
+                    <p>دائرة المهندس المقيم</p>
+                </div>
+            </section>
         </main>
+        
         <footer class="card-footer">
             <div class="contact-info">
-                <a href="tel:07734037190"><i class="fa-solid fa-phone"></i> 07734037190</a><a href="mailto:emada3170@gmail.com"><i class="fa-solid fa-envelope"></i> emada3170@gmail.com</a>
+                 <a href="tel:07734037190"><i class="fa-solid fa-phone"></i> 07734037190</a>
+                 <a href="mailto:emada3170@gmail.com"><i class="fa-solid fa-envelope"></i> emada3170@gmail.com</a>
             </div>
-            <div class="credits"><p>برمجة وتصميم: م. عماد علي العتابي</p></div>
+            <div class="credits">
+                <p>برمجة وتصميم: م. عماد علي العتابي</p>
+            </div>
         </footer>
     </div>
 
     <script>
-        const googleSheetPublishedURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTaqqbTYJGqPQFCNALkXPSBddp9Bi42Gvia7I5AgFmhlSuiB5g5j3bgLH3Qv2rPNV_8_y0FSEsuHTrH/pub?output=csv';
-        const employeesSheetName = 'employees';
-        const departmentsSheetName = 'departments';
-
-        function fetchData(sheetName) {
-            return new Promise((resolve) => {
-                Papa.parse(`${googleSheetPublishedURL}&sheet=${sheetName}&output=csv&t=${new Date().getTime()}`, {
-                    download: true, header: true, skipEmptyLines: true,
-                    complete: (results) => resolve(results.data),
-                    error: () => resolve([]),
-                });
-            });
-        }
-        
-        async function main() {
-            document.getElementById('profile-card').classList.add('visible');
-            try {
-                console.log("بدء تحميل البيانات...");
-                const urlParams = new URLSearchParams(window.location.search);
-                const employeeIdToFind = urlParams.get('id');
-                if (!employeeIdToFind) { return showError("رقم الموظف غير محدد. <br> أضف ?id=1 في نهاية الرابط"); }
-                
-                console.log(`البحث عن الموظف صاحب الـ id: "${employeeIdToFind}" (نوعه: ${typeof employeeIdToFind})`);
-
-                const [employees, departments] = await Promise.all([ fetchData(employeesSheetName), fetchData(departmentsSheetName) ]);
-                
-                console.log("بيانات الموظفين التي تم تحميلها:", employees);
-                console.log("بيانات الأقسام التي تم تحميلها:", departments);
-
-                if (employees.length === 0) { return showError("فشل تحميل بيانات الموظفين أو أن الورقة فارغة. تأكد من الرابط وعناوين الأعمدة في Google Sheet.");}
-
-                // === التصحيح الحاسم لمشكلة (النص مقابل الرقم) ===
-                // نستخدم المقارنة المتساهلة (==) التي تتجاهل نوع البيانات
-                const employee = employees.find(emp => emp.id == employeeIdToFind);
-
-                if (!employee) { return showError(`لم يتم العثور على الموظف. تأكد من وجود موظف بالـ id رقم "${employeeIdToFind}" في ملف Google Sheet.`); }
-                
-                console.log("تم العثور على الموظف:", employee);
-                const department = departments.find(dept => dept.id == employee.department_id);
-                
-                populatePage(employee, department);
-            } catch (error) {
-                console.error("حدث خطأ كارثي:", error);
-                showError("فشل في تشغيل البرنامج. تحقق من الكونسول.");
+        // هذا الجزء لا يحتاج أي تعديل
+        document.addEventListener("DOMContentLoaded", function() {
+            const params = new URLSearchParams(window.location.search);
+            const data = {
+                name: params.get('name'),
+                title: params.get('title'),
+                photo: params.get('photo'),
+                id: params.get('id'),
+                dept: params.get('dept'),
+                exp: params.get('exp')
+            };
+            const setContent = (id, content) => {
+                const element = document.getElementById(id);
+                if (element && content) element.innerHTML = content;
+            };
+            const setAttribute = (id, attr, value) => {
+                const element = document.getElementById(id);
+                if (element && value) element.setAttribute(attr, value);
             }
-        }
-        
-        function populatePage(employee, department) {
-            document.getElementById('employee-name').textContent = employee.name || '';
-            document.getElementById('employee-photo').src = employee.photo_url || '';
-            document.getElementById('employee-job-title').textContent = employee.title || '';
-            document.getElementById('employee-id').textContent = employee.employee_id || '';
-            document.getElementById('auth-text-placeholder').textContent = employee.auth_text || "مخول بالقيام بالمهام الموكلة إليه.";
-            document.getElementById('department-name').textContent = department ? (department.name || '') : '';
-            document.title = `هوية تحقق - ${employee.name || 'موظف'}`;
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('employee-content').style.display = 'block';
-        }
-
-        function showError(message) {
-            const loader = document.getElementById('loader');
-            loader.innerHTML = `<div style="padding:20px; color: #d9534f; background: #f2dede; border-radius:10px; border:1px solid #ebccd1;"><i class="fas fa-exclamation-triangle"></i><p style="font-weight:bold; margin-top:10px;">خطأ في عرض البيانات</p><p style="font-size:0.9em;">${message}</p></div>`;
-        }
-        
-        document.addEventListener('DOMContentLoaded', main);
+            if (data.name) setContent('employee-name', data.name);
+            if (data.title) setContent('employee-job-title', data.title);
+            if (data.id) setContent('employee-id', data.id);
+            if (data.dept) setContent('employee-dept', data.dept);
+            if (data.exp) {
+                setContent('employee-exp', data.exp);
+                document.getElementById('expiry-date-item').style.display = 'flex';
+            }
+            if (data.photo) setAttribute('employee-photo', 'src', data.photo);
+            if(params.has('name')) document.title = `هوية تحقق - ${data.name}`;
+        });
     </script>
 </body>
 </html>
