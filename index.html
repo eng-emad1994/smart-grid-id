@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>هوية تحقق الموظف</title>
     
-    <!-- Google Fonts & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
@@ -13,7 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
     
     <style>
-        /* CSS لم يتغير */
+        /* CSS Code - No changes needed */
         :root { --primary-color: #0056b3; --text-color-dark: #2c3e50; --bg-color: #e9ecef; --card-bg-color: #ffffff; }
         body { font-family: 'Cairo', sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .profile-card { background-color: var(--card-bg-color); border-radius: 24px; box-shadow: 0 15px 35px rgba(44, 62, 80, 0.1); max-width: 480px; width: 100%; text-align: center; opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
@@ -22,10 +21,9 @@
         .card-header img { max-height: 45px; max-width: 100px; object-fit: contain; filter: brightness(0) invert(1); }
         .project-title-wrapper h2 { margin: 0; font-size: 0.95rem; font-weight: 700; color: white; }
         .card-body { padding: 30px 25px; }
-        /* === تم تصحيح مكان ظهور اسم الموظف === */
-        #employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
-        .employee-photo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 6px solid var(--bg-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px; background-color: #ccc; } /* لون افتراضي للصورة */
-        #employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
+        h1#employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
+        .employee-photo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 6px solid var(--bg-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px; background-color: #eee; }
+        p#employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
         .info-section { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
         .info-item { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 10px 20px; border-radius: 50px; font-size: 0.9em; display: flex; align-items: center; }
         .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
@@ -53,18 +51,14 @@
             <div id="loader" class="loader">
                 <i class="fas fa-spinner fa-spin"></i><p>جاري تحميل البيانات...</p>
             </div>
-            <!-- هذا الهيكل هو الصحيح ويتم إخفاؤه حتى العثور على البيانات -->
             <div id="employee-content" style="display: none;">
-                <h1 id="employee-name"></h1>
-                <img id="employee-photo" class="employee-photo" src="" alt="صورة الموظف">
-                <p id="employee-job-title"></p>
+                <h1 id="employee-name"></h1><img id="employee-photo" class="employee-photo" src="" alt="صورة الموظف"><p id="employee-job-title"></p>
                 <section class="info-section">
                     <div class="info-item"><i class="fa-solid fa-id-card-clip"></i><span>الرقم الوظيفي: <strong id="employee-id"></strong></span></div>
                     <div class="info-item"><i class="fa-solid fa-building-user"></i><span>القسم: <strong id="department-name"></strong></span></div>
                 </section>
                 <section class="auth-section">
-                    <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3>
-                    <p id="auth-text-placeholder"></p> 
+                    <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3><p id="auth-text-placeholder"></p> 
                 </section>
                 <section class="signatures">
                     <div class="signature-block"><img src="admin.png" alt="توقيع المدير"><p>مدير الشركة</p></div>
@@ -96,38 +90,46 @@
         }
         
         async function main() {
-            document.getElementById('profile-card').classList.add('visible'); // إظهار البطاقة دائماً
+            document.getElementById('profile-card').classList.add('visible');
             try {
+                console.log("بدء تحميل البيانات...");
                 const urlParams = new URLSearchParams(window.location.search);
                 const employeeIdToFind = urlParams.get('id');
                 if (!employeeIdToFind) { return showError("رقم الموظف غير محدد. <br> أضف ?id=1 في نهاية الرابط"); }
+                
+                console.log(`البحث عن الموظف صاحب الـ id: "${employeeIdToFind}" (نوعه: ${typeof employeeIdToFind})`);
 
                 const [employees, departments] = await Promise.all([ fetchData(employeesSheetName), fetchData(departmentsSheetName) ]);
                 
-                if (employees.length === 0) { return showError("فشل تحميل بيانات الموظفين. تأكد من صحة الرابط ومن أن ورقة 'employees' تحتوي على بيانات.");}
+                console.log("بيانات الموظفين التي تم تحميلها:", employees);
+                console.log("بيانات الأقسام التي تم تحميلها:", departments);
 
-                const employee = employees.find(emp => emp.id && emp.id.trim() === employeeIdToFind.trim());
+                if (employees.length === 0) { return showError("فشل تحميل بيانات الموظفين أو أن الورقة فارغة. تأكد من الرابط وعناوين الأعمدة في Google Sheet.");}
 
-                if (!employee) { return showError(`لم يتم العثور على موظف بالرقم التعريفي (id) ${employeeIdToFind} في قاعدة البيانات.`); }
+                // === التصحيح الحاسم لمشكلة (النص مقابل الرقم) ===
+                // نستخدم المقارنة المتساهلة (==) التي تتجاهل نوع البيانات
+                const employee = employees.find(emp => emp.id == employeeIdToFind);
+
+                if (!employee) { return showError(`لم يتم العثور على الموظف. تأكد من وجود موظف بالـ id رقم "${employeeIdToFind}" في ملف Google Sheet.`); }
                 
-                const department = departments.find(dept => dept.id && employee.department_id && dept.id.trim() === employee.department_id.trim());
+                console.log("تم العثور على الموظف:", employee);
+                const department = departments.find(dept => dept.id == employee.department_id);
                 
                 populatePage(employee, department);
             } catch (error) {
-                console.error("حدث خطأ:", error);
-                showError("فشل تحميل البيانات. تحقق من الرابط والنشر.");
+                console.error("حدث خطأ كارثي:", error);
+                showError("فشل في تشغيل البرنامج. تحقق من الكونسول.");
             }
         }
         
         function populatePage(employee, department) {
-            document.getElementById('employee-name').textContent = employee.name || 'اسم غير متوفر';
+            document.getElementById('employee-name').textContent = employee.name || '';
             document.getElementById('employee-photo').src = employee.photo_url || '';
-            document.getElementById('employee-job-title').textContent = employee.title || 'وظيفة غير متوفرة';
-            document.getElementById('employee-id').textContent = employee.employee_id || 'غير محدد';
+            document.getElementById('employee-job-title').textContent = employee.title || '';
+            document.getElementById('employee-id').textContent = employee.employee_id || '';
             document.getElementById('auth-text-placeholder').textContent = employee.auth_text || "مخول بالقيام بالمهام الموكلة إليه.";
-            document.getElementById('department-name').textContent = department ? (department.name || 'قسم غير معرف') : 'قسم غير محدد';
+            document.getElementById('department-name').textContent = department ? (department.name || '') : '';
             document.title = `هوية تحقق - ${employee.name || 'موظف'}`;
-            
             document.getElementById('loader').style.display = 'none';
             document.getElementById('employee-content').style.display = 'block';
         }
