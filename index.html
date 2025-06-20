@@ -24,94 +24,62 @@
             --iraq-red: #ce1126;
             --iraq-white: #ffffff;
             --iraq-black: #000000;
+            /* لون الشحنة الكهربائية */
+            --electric-blue: #00aaff;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ===== تم إضافة هذا القسم للرسوم المتحركة ===== */
+        @keyframes electric-flicker {
+            0%   { box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 12px var(--electric-blue), 0 0 15px var(--electric-blue); opacity: 1; }
+            5%   { box-shadow: 0 0 6px #fff, 0 0 10px #fff, 0 0 16px var(--electric-blue), 0 0 20px var(--electric-blue); opacity: 0.8; }
+            10%  { box-shadow: 0 0 4px #fff, 0 0 7px #fff, 0 0 10px var(--electric-blue), 0 0 14px var(--electric-blue); opacity: 1; }
+            25%  { box-shadow: 0 0 7px #fff, 0 0 12px #fff, 0 0 18px var(--electric-blue), 0 0 22px var(--electric-blue); opacity: 0.9; }
+            50%  { box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 13px var(--electric-blue), 0 0 18px var(--electric-blue); opacity: 1; }
+            75%  { box-shadow: 0 0 8px #fff, 0 0 14px #fff, 0 0 20px var(--electric-blue), 0 0 25px var(--electric-blue); opacity: 0.7; }
+            100% { box-shadow: 0 0 5px #fff, 0 0 8px #fff, 0 0 12px var(--electric-blue), 0 0 15px var(--electric-blue); opacity: 1; }
         }
+
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
+            background-color: var(--bg-color); margin: 0; padding: 20px;
+            display: flex; justify-content: center; align-items: center; min-height: 100vh;
         }
-
         .profile-card {
-            background-color: var(--card-bg-color);
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            max-width: 500px;
-            width: 100%;
-            overflow: hidden;
+            background-color: var(--card-bg-color); border-radius: 16px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); max-width: 500px;
+            width: 100%; overflow: hidden;
             animation: fadeIn 0.8s ease-out;
         }
-
         .card-header {
-            background-color: var(--header-bg-color);
-            padding: 25px;
-            text-align: center;
+            background-color: var(--header-bg-color); padding: 25px; text-align: center;
             border-bottom: 1px solid #dee2e6;
         }
-
-        .logos-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .logos-container .side-logo {
-            max-height: 90px;
-            max-width: 150px;
-            object-fit: contain;
-        }
-        
-        .logos-container .center-gif {
-            max-height: 80px;
-            object-fit: contain;
-        }
-        
-        .header-text h4, .header-text h3, .header-text h2 {
-            margin: 4px 0; color: var(--text-color-dark);
-        }
+        .logos-container { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .logos-container .side-logo { max-height: 90px; max-width: 150px; object-fit: contain; }
+        .logos-container .center-gif { max-height: 80px; object-fit: contain; }
+        .header-text h4, .header-text h3, .header-text h2 { margin: 4px 0; color: var(--text-color-dark); }
         .header-text h4 { font-size: 0.9em; font-weight: 400; color: var(--text-color-light); }
         .header-text h3 { font-size: 1.05em; font-weight: 600; }
         .header-text h2 { font-size: 1.2em; font-weight: 700; color: var(--primary-color); }
-
         .card-body { padding: 30px 25px; text-align: center; }
-
         .employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
 
-        /* ===== التعديل الرئيسي هنا: حاوية صورة الموظف ===== */
+        /* ===== تم تطبيق الأنيميشن هنا ===== */
         .employee-photo-wrapper {
-            width: 172px;  /* 160px للصورة + 6px padding من كل جهة */
-            height: 172px;
-            border-radius: 50%;
-            padding: 6px; /* سمك الإطار */
+            width: 172px; height: 172px; border-radius: 50%; padding: 6px;
             background: linear-gradient(to bottom, 
-                var(--iraq-red) 33.3%, 
-                var(--iraq-white) 33.3%, 
-                var(--iraq-white) 66.6%, 
-                var(--iraq-black) 66.6%
+                var(--iraq-red) 33.3%, var(--iraq-white) 33.3%,
+                var(--iraq-white) 66.6%, var(--iraq-black) 66.6%
             );
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-            margin: 0 auto 20px; /* للتموضع في المنتصف */
+            margin: 0 auto 20px;
+            /* تطبيق الأنيميشن (التأثير الكهربائي) */
+            animation: electric-flicker 3s infinite linear;
         }
         
-        /* ===== وهذا تعديل الـ CSS للصورة نفسها داخل الإطار ===== */
         .employee-photo {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            display: block;
-            /* تمت إزالة الإطار والظل من هنا ووضعهما في الحاوية */
+            width: 100%; height: 100%; border-radius: 50%;
+            object-fit: cover; display: block;
         }
         
         .employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
@@ -161,12 +129,9 @@
         <main class="card-body">
             
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
-
-            <!-- ===== انتبه لهذا التغيير في HTML: تمت إضافة الحاوية الجديدة ===== -->
             <div class="employee-photo-wrapper">
                 <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
             </div>
-
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
             
             <section class="info-section">
