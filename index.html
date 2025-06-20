@@ -62,10 +62,14 @@
             margin-bottom: 20px;
         }
         
-        /* ===== التعديل هنا: تم تكبير الشعارات ===== */
-        .logos-container img {
-            max-height: 70px;  /* تمت الزيادة من 55px */
-            max-width: 150px; /* تمت الزيادة بشكل متناسب */
+        .logos-container .side-logo {
+            max-height: 90px;
+            max-width: 150px;
+            object-fit: contain;
+        }
+
+        .logos-container .center-gif {
+            max-height: 80px;
             object-fit: contain;
         }
         
@@ -107,24 +111,11 @@
             margin-bottom: 25px;
         }
         
-        .info-section {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
+        .info-section { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
         .info-item {
-            background-color: var(--header-bg-color);
-            border: 1px solid #e9ecef;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
+            background-color: var(--header-bg-color); border: 1px solid #e9ecef; padding: 10px 20px;
+            border-radius: 50px; font-size: 0.9em; display: flex; align-items: center;
         }
-        
         .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
         .info-item span, .info-item strong { color: var(--text-color-dark); }
         
@@ -136,31 +127,14 @@
         .signature-block p { font-size: 0.85em; font-weight: 600; }
 
         .card-footer {
-            background-color: #f8f9fa;
-            border-top: 1px solid #e9ecef;
-            padding: 20px 15px;
-            text-align: center;
+            background-color: #f8f9fa; border-top: 1px solid #e9ecef; padding: 20px 15px; text-align: center;
         }
-        .contact-info {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #e9ecef;
-        }
+        .contact-info { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef; }
         .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; }
 
-        .verification-notice {
-            margin-bottom: 15px;
-        }
-        .verification-notice p {
-            margin: 0;
-            font-size: 0.9em;
-            color: var(--text-color-dark);
-            line-height: 1.6;
-        }
-        .credits {
-            font-size: 0.8em;
-            color: #aaa;
-        }
+        .verification-notice { margin-bottom: 15px; }
+        .verification-notice p { margin: 0; font-size: 0.9em; color: var(--text-color-dark); line-height: 1.6; }
+        .credits { font-size: 0.8em; color: #aaa; }
         .credits p { margin: 0; }
     </style>
 </head>
@@ -169,8 +143,12 @@
     <div class="profile-card">
         <header class="card-header">
             <div class="logos-container">
-                <img src="co.png" alt="شعار شركة كهرباء الوسط">
-                <img src="min.png" alt="شعار وزارة الكهرباء">
+                <img src="co.png" class="side-logo" alt="شعار شركة كهرباء الوسط">
+                
+                <!-- تم تحديد اسم الـ GIF هنا -->
+                <img src="Iraq.gif" class="center-gif" alt="Animation">
+
+                <img src="min.png" class="side-logo" alt="شعار وزارة الكهرباء">
             </div>
             <div class="header-text">
                 <h4>جمهورية العراق - وزارة الكهرباء</h4>
@@ -183,36 +161,18 @@
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
             <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
-            
             <section class="info-section">
-                <div class="info-item">
-                    <i class="fa-solid fa-id-card-clip"></i>
-                    <span>الرقم الوظيفي: <strong id="employee-id">1994</strong></span>
-                </div>
-                <div class="info-item">
-                    <i class="fa-solid fa-building-user"></i>
-                    <span>القسم: <strong id="employee-dept">مبيعات الطاقة</strong></span>
-                </div>
-                 <div class="info-item" id="expiry-date-item" style="display: none;">
-                    <i class="fa-solid fa-calendar-xmark"></i>
-                    <span>نفاذ الهوية: <strong id="employee-exp"></strong></span>
-                </div>
+                <div class="info-item"> <i class="fa-solid fa-id-card-clip"></i> <span>الرقم الوظيفي: <strong id="employee-id">1994</strong></span> </div>
+                <div class="info-item"> <i class="fa-solid fa-building-user"></i> <span>القسم: <strong id="employee-dept">مبيعات الطاقة</strong></span> </div>
+                <div class="info-item" id="expiry-date-item" style="display: none;"> <i class="fa-solid fa-calendar-xmark"></i> <span>نفاذ الهوية: <strong id="employee-exp"></strong></span> </div>
             </section>
-            
             <section class="auth-section">
                 <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3>
                 <p>بموجب هذا، نؤكد أن حامل الهوية مخول من قبل <strong>شركة توزيع كهرباء الوسط - دائرة المهندس المقيم</strong>، ونرجو من كافة الجهات المعنية تسهيل جميع الأمور المتعلقة بإنجاز مهام عمله.</p>
             </section>
-            
             <section class="signatures">
-                <div class="signature-block">
-                    <img src="admin.png" alt="توقيع المدير">
-                    <p>مدير الشركة</p>
-                </div>
-                <div class="signature-block">
-                    <img src="eng.png" alt="توقيع المهندس المقيم">
-                    <p>دائرة المهندس المقيم</p>
-                </div>
+                <div class="signature-block"> <img src="admin.png" alt="توقيع المدير"> <p>مدير الشركة</p> </div>
+                <div class="signature-block"> <img src="eng.png" alt="توقيع المهندس المقيم"> <p>دائرة المهندس المقيم</p> </div>
             </section>
         </main>
         
@@ -222,11 +182,7 @@
                  <a href="mailto:emada3170@gmail.com"><i class="fa-solid fa-envelope"></i> emada3170@gmail.com</a>
             </div>
             <div class="verification-notice">
-                <p>
-                    <i class="fa-solid fa-circle-check" style="color: #28a745;"></i>
-                    هذه الهوية الرقمية موثقة ومعتمدة ضمن سجلات:<br>
-                    <b>شركة قلعة الطارق - مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</b>
-                </p>
+                <p> <i class="fa-solid fa-circle-check" style="color: #28a745;"></i> هذه الهوية الرقمية موثقة ومعتمدة ضمن سجلات:<br> <b>شركة قلعة الطارق - مشروع التحول الذكي بالشبكة الكهربائية لمدينة الكوت</b> </p>
             </div>
             <div class="credits">
                 <p>برمجة وتصميم: م. عماد علي العتابي</p>
@@ -236,43 +192,21 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const defaultData = {
-                name: "أثمار مهدي حسن",
-                title: "قارئ مقياس - عداد",
-                id: "1994",
-                dept: "مبيعات الطاقة",
-                exp: null,
-                photo: "at.png"
-            };
+            const defaultData = { name: "أثمار مهدي حسن", title: "قارئ مقياس - عداد", id: "1994", dept: "مبيعات الطاقة", exp: null, photo: "at.png" };
             const params = new URLSearchParams(window.location.search);
             const data = {
-                name: params.get('name') || defaultData.name,
-                title: params.get('title') || defaultData.title,
-                photo: params.get('photo') || defaultData.photo,
-                id: params.get('id') || defaultData.id,
-                dept: params.get('dept') || defaultData.dept,
-                exp: params.get('exp') || defaultData.exp
+                name: params.get('name') || defaultData.name, title: params.get('title') || defaultData.title,
+                photo: params.get('photo') || defaultData.photo, id: params.get('id') || defaultData.id,
+                dept: params.get('dept') || defaultData.dept, exp: params.get('exp') || defaultData.exp
             };
-            const setContent = (id, content) => {
-                const element = document.getElementById(id);
-                if (element && content) element.innerHTML = content;
-            };
-            const setAttribute = (id, attr, value) => {
-                const element = document.getElementById(id);
-                if (element && value) element.setAttribute(attr, value);
-            }
-            setContent('employee-name', data.name);
-            setContent('employee-job-title', data.title);
-            setContent('employee-id', data.id);
-            setContent('employee-dept', data.dept);
+            const setContent = (id, content) => { if (document.getElementById(id) && content) document.getElementById(id).innerHTML = content; };
+            const setAttribute = (id, attr, value) => { if (document.getElementById(id) && value) document.getElementById(id).setAttribute(attr, value); }
+            setContent('employee-name', data.name); setContent('employee-job-title', data.title);
+            setContent('employee-id', data.id); setContent('employee-dept', data.dept);
             if (data.exp) {
-                setContent('employee-exp', data.exp);
-                document.getElementById('expiry-date-item').style.display = 'flex';
-            } else {
-                 document.getElementById('expiry-date-item').style.display = 'none';
-            }
-            setAttribute('employee-photo', 'src', data.photo);
-            document.title = `هوية تحقق - ${data.name}`;
+                setContent('employee-exp', data.exp); document.getElementById('expiry-date-item').style.display = 'flex';
+            } else { document.getElementById('expiry-date-item').style.display = 'none'; }
+            setAttribute('employee-photo', 'src', data.photo); document.title = `هوية تحقق - ${data.name}`;
         });
     </script>
 </body>
