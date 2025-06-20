@@ -20,6 +20,10 @@
             --bg-color: #e9ecef;
             --card-bg-color: #ffffff;
             --header-bg-color: #f8f9fa;
+            /* ألوان علم العراق الرسمية */
+            --iraq-red: #ce1126;
+            --iraq-white: #ffffff;
+            --iraq-black: #000000;
         }
 
         @keyframes fadeIn {
@@ -67,49 +71,50 @@
             max-width: 150px;
             object-fit: contain;
         }
-
+        
         .logos-container .center-gif {
             max-height: 80px;
             object-fit: contain;
         }
         
         .header-text h4, .header-text h3, .header-text h2 {
-            margin: 4px 0;
-            color: var(--text-color-dark);
+            margin: 4px 0; color: var(--text-color-dark);
         }
-
         .header-text h4 { font-size: 0.9em; font-weight: 400; color: var(--text-color-light); }
         .header-text h3 { font-size: 1.05em; font-weight: 600; }
         .header-text h2 { font-size: 1.2em; font-weight: 700; color: var(--primary-color); }
 
-        .card-body {
-            padding: 30px 25px;
-            text-align: center;
-        }
+        .card-body { padding: 30px 25px; text-align: center; }
 
-        .employee-name {
-            font-size: 2.1em;
-            font-weight: 700;
-            color: var(--text-color-dark);
-            margin-bottom: 15px;
-        }
+        .employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
 
-        .employee-photo {
-            width: 160px;
-            height: 160px;
+        /* ===== التعديل الرئيسي هنا: حاوية صورة الموظف ===== */
+        .employee-photo-wrapper {
+            width: 172px;  /* 160px للصورة + 6px padding من كل جهة */
+            height: 172px;
             border-radius: 50%;
-            object-fit: cover;
-            border: 6px solid var(--bg-color);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            margin-bottom: 15px;
+            padding: 6px; /* سمك الإطار */
+            background: linear-gradient(to bottom, 
+                var(--iraq-red) 33.3%, 
+                var(--iraq-white) 33.3%, 
+                var(--iraq-white) 66.6%, 
+                var(--iraq-black) 66.6%
+            );
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            margin: 0 auto 20px; /* للتموضع في المنتصف */
         }
         
-        .employee-job-title {
-            font-size: 1.25em;
-            color: var(--primary-color);
-            font-weight: 600;
-            margin-bottom: 25px;
+        /* ===== وهذا تعديل الـ CSS للصورة نفسها داخل الإطار ===== */
+        .employee-photo {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+            /* تمت إزالة الإطار والظل من هنا ووضعهما في الحاوية */
         }
+        
+        .employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
         
         .info-section { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
         .info-item {
@@ -131,7 +136,6 @@
         }
         .contact-info { margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px solid #e9ecef; }
         .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; }
-
         .verification-notice { margin-bottom: 15px; }
         .verification-notice p { margin: 0; font-size: 0.9em; color: var(--text-color-dark); line-height: 1.6; }
         .credits { font-size: 0.8em; color: #aaa; }
@@ -144,10 +148,7 @@
         <header class="card-header">
             <div class="logos-container">
                 <img src="co.png" class="side-logo" alt="شعار شركة كهرباء الوسط">
-                
-                <!-- تم تحديد اسم الـ GIF هنا -->
                 <img src="Iraq.gif" class="center-gif" alt="Animation">
-
                 <img src="min.png" class="side-logo" alt="شعار وزارة الكهرباء">
             </div>
             <div class="header-text">
@@ -158,18 +159,27 @@
         </header>
 
         <main class="card-body">
+            
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
-            <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
+
+            <!-- ===== انتبه لهذا التغيير في HTML: تمت إضافة الحاوية الجديدة ===== -->
+            <div class="employee-photo-wrapper">
+                <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
+            </div>
+
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
+            
             <section class="info-section">
                 <div class="info-item"> <i class="fa-solid fa-id-card-clip"></i> <span>الرقم الوظيفي: <strong id="employee-id">1994</strong></span> </div>
                 <div class="info-item"> <i class="fa-solid fa-building-user"></i> <span>القسم: <strong id="employee-dept">مبيعات الطاقة</strong></span> </div>
                 <div class="info-item" id="expiry-date-item" style="display: none;"> <i class="fa-solid fa-calendar-xmark"></i> <span>نفاذ الهوية: <strong id="employee-exp"></strong></span> </div>
             </section>
+            
             <section class="auth-section">
                 <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3>
                 <p>بموجب هذا، نؤكد أن حامل الهوية مخول من قبل <strong>شركة توزيع كهرباء الوسط - دائرة المهندس المقيم</strong>، ونرجو من كافة الجهات المعنية تسهيل جميع الأمور المتعلقة بإنجاز مهام عمله.</p>
             </section>
+            
             <section class="signatures">
                 <div class="signature-block"> <img src="admin.png" alt="توقيع المدير"> <p>مدير الشركة</p> </div>
                 <div class="signature-block"> <img src="eng.png" alt="توقيع المهندس المقيم"> <p>دائرة المهندس المقيم</p> </div>
@@ -192,6 +202,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+            // كود الجافاسكربت يبقى كما هو
             const defaultData = { name: "أثمار مهدي حسن", title: "قارئ مقياس - عداد", id: "1994", dept: "مبيعات الطاقة", exp: null, photo: "at.png" };
             const params = new URLSearchParams(window.location.search);
             const data = {
