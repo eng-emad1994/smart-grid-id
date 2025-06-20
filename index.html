@@ -14,12 +14,12 @@
     <style>
         :root {
             --primary-color: #0056b3;
-            --secondary-color: #2c3e50; /* لون أغمق للنصوص الرئيسية */
+            --secondary-color: #2c3e50;
             --text-color-dark: #2c3e50;
             --text-color-light: #555;
             --bg-color: #e9ecef;
             --card-bg-color: #ffffff;
-            --header-bg-color: #f8f9fa; /* لون خلفية خفيف للرأس */
+            --header-bg-color: #f8f9fa;
         }
 
         @keyframes fadeIn {
@@ -40,7 +40,7 @@
 
         .profile-card {
             background-color: var(--card-bg-color);
-            border-radius: 16px; /* حواف أقل دائرية لتبدو رسمية أكثر */
+            border-radius: 16px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             max-width: 500px;
             width: 100%;
@@ -48,7 +48,6 @@
             animation: fadeIn 0.8s ease-out;
         }
 
-        /* ===== الرأس بالتصميم الرسمي الجديد ===== */
         .card-header {
             background-color: var(--header-bg-color);
             padding: 25px;
@@ -63,11 +62,11 @@
             margin-bottom: 20px;
         }
         
+        /* ===== التعديل هنا: تم تكبير الشعارات ===== */
         .logos-container img {
-            max-height: 55px; /* يمكن زيادة الحجم قليلاً */
-            max-width: 120px;
+            max-height: 70px;  /* تمت الزيادة من 55px */
+            max-width: 150px; /* تمت الزيادة بشكل متناسب */
             object-fit: contain;
-            /* تم حذف الفلتر الأبيض */
         }
         
         .header-text h4, .header-text h3, .header-text h2 {
@@ -75,22 +74,9 @@
             color: var(--text-color-dark);
         }
 
-        .header-text h4 { /* وزارة الكهرباء */
-            font-size: 0.9em;
-            font-weight: 400;
-            color: var(--text-color-light);
-        }
-
-        .header-text h3 { /* الشركة العامة */
-            font-size: 1.05em;
-            font-weight: 600;
-        }
-
-        .header-text h2 { /* اسم المشروع */
-            font-size: 1.2em;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
+        .header-text h4 { font-size: 0.9em; font-weight: 400; color: var(--text-color-light); }
+        .header-text h3 { font-size: 1.05em; font-weight: 600; }
+        .header-text h2 { font-size: 1.2em; font-weight: 700; color: var(--primary-color); }
 
         .card-body {
             padding: 30px 25px;
@@ -158,7 +144,7 @@
         .contact-info {
             margin-bottom: 15px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #e9ecef; /* خط فاصل */
+            border-bottom: 1px solid #e9ecef;
         }
         .contact-info a { color: var(--text-color-light); text-decoration: none; margin: 0 10px; font-weight: 600; }
 
@@ -194,7 +180,6 @@
         </header>
 
         <main class="card-body">
-            <!-- البيانات الافتراضية هنا -->
             <h1 id="employee-name" class="employee-name">أثمار مهدي حسن</h1>
             <img id="employee-photo" class="employee-photo" src="at.png" alt="صورة الموظف">
             <p id="employee-job-title" class="employee-job-title">قارئ مقياس - عداد</p>
@@ -251,16 +236,14 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // بيانات الموظف الافتراضي، تم تعديلها هنا
             const defaultData = {
                 name: "أثمار مهدي حسن",
                 title: "قارئ مقياس - عداد",
                 id: "1994",
                 dept: "مبيعات الطاقة",
-                exp: null, // لا يوجد تاريخ نفاذ افتراضي
+                exp: null,
                 photo: "at.png"
             };
-
             const params = new URLSearchParams(window.location.search);
             const data = {
                 name: params.get('name') || defaultData.name,
@@ -270,29 +253,24 @@
                 dept: params.get('dept') || defaultData.dept,
                 exp: params.get('exp') || defaultData.exp
             };
-
             const setContent = (id, content) => {
                 const element = document.getElementById(id);
                 if (element && content) element.innerHTML = content;
             };
-
             const setAttribute = (id, attr, value) => {
                 const element = document.getElementById(id);
                 if (element && value) element.setAttribute(attr, value);
             }
-            
             setContent('employee-name', data.name);
             setContent('employee-job-title', data.title);
             setContent('employee-id', data.id);
             setContent('employee-dept', data.dept);
-            
             if (data.exp) {
                 setContent('employee-exp', data.exp);
                 document.getElementById('expiry-date-item').style.display = 'flex';
             } else {
                  document.getElementById('expiry-date-item').style.display = 'none';
             }
-            
             setAttribute('employee-photo', 'src', data.photo);
             document.title = `هوية تحقق - ${data.name}`;
         });
