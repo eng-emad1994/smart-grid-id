@@ -22,9 +22,10 @@
         .card-header img { max-height: 45px; max-width: 100px; object-fit: contain; filter: brightness(0) invert(1); }
         .project-title-wrapper h2 { margin: 0; font-size: 0.95rem; font-weight: 700; color: white; }
         .card-body { padding: 30px 25px; }
-        .employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
-        .employee-photo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 6px solid var(--bg-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px; }
-        .employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
+        /* === تم تصحيح مكان ظهور اسم الموظف === */
+        #employee-name { font-size: 2.1em; font-weight: 700; color: var(--text-color-dark); margin-bottom: 15px; }
+        .employee-photo { width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 6px solid var(--bg-color); box-shadow: 0 5px 20px rgba(0,0,0,0.1); margin-bottom: 15px; background-color: #ccc; } /* لون افتراضي للصورة */
+        #employee-job-title { font-size: 1.25em; color: var(--primary-color); font-weight: 600; margin-bottom: 25px; }
         .info-section { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; margin-bottom: 30px; }
         .info-item { background-color: #f8f9fa; border: 1px solid #e9ecef; padding: 10px 20px; border-radius: 50px; font-size: 0.9em; display: flex; align-items: center; }
         .info-item i { color: var(--primary-color); margin-left: 8px; font-size: 1.1em; }
@@ -52,15 +53,17 @@
             <div id="loader" class="loader">
                 <i class="fas fa-spinner fa-spin"></i><p>جاري تحميل البيانات...</p>
             </div>
+            <!-- هذا الهيكل هو الصحيح ويتم إخفاؤه حتى العثور على البيانات -->
             <div id="employee-content" style="display: none;">
-                <h1 id="employee-name"></h1><img id="employee-photo" class="employee-photo" src="" alt="صورة الموظف"><p id="employee-job-title"></p>
+                <h1 id="employee-name"></h1>
+                <img id="employee-photo" class="employee-photo" src="" alt="صورة الموظف">
+                <p id="employee-job-title"></p>
                 <section class="info-section">
                     <div class="info-item"><i class="fa-solid fa-id-card-clip"></i><span>الرقم الوظيفي: <strong id="employee-id"></strong></span></div>
                     <div class="info-item"><i class="fa-solid fa-building-user"></i><span>القسم: <strong id="department-name"></strong></span></div>
                 </section>
                 <section class="auth-section">
                     <h3><i class="fa-solid fa-shield-halved"></i> تخويل رسمي</h3>
-                    <!-- سيتم ملء هذا الحقل بنص التخويل من Google Sheet -->
                     <p id="auth-text-placeholder"></p> 
                 </section>
                 <section class="signatures">
@@ -78,34 +81,36 @@
     </div>
 
     <script>
-        // ========= إعدادات الربط =========
         const googleSheetPublishedURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTaqqbTYJGqPQFCNALkXPSBddp9Bi42Gvia7I5AgFmhlSuiB5g5j3bgLH3Qv2rPNV_8_y0FSEsuHTrH/pub?output=csv';
         const employeesSheetName = 'employees';
         const departmentsSheetName = 'departments';
-        // ==================================
 
         function fetchData(sheetName) {
             return new Promise((resolve) => {
-                Papa.parse(`${googleSheetPublishedURL}&sheet=${sheetName}&output=csv&t=${new Date().getTime()}`, { // أضفنا تاريخ لتجنب التخزين المؤقت
-                    download: true, header: true,
-                    complete: (results) => resolve(results.data.filter(row => row.id && row.id.trim() !== '')),
-                    error: () => resolve([]), // إرجاع مصفوفة فارغة في حالة الخطأ
+                Papa.parse(`${googleSheetPublishedURL}&sheet=${sheetName}&output=csv&t=${new Date().getTime()}`, {
+                    download: true, header: true, skipEmptyLines: true,
+                    complete: (results) => resolve(results.data),
+                    error: () => resolve([]),
                 });
             });
         }
         
         async function main() {
+            document.getElementById('profile-card').classList.add('visible'); // إظهار البطاقة دائماً
             try {
                 const urlParams = new URLSearchParams(window.location.search);
                 const employeeIdToFind = urlParams.get('id');
-                if (!employeeIdToFind) { return showError("رقم الموظف غير محدد. مثال: ?id=1"); }
+                if (!employeeIdToFind) { return showError("رقم الموظف غير محدد. <br> أضف ?id=1 في نهاية الرابط"); }
 
                 const [employees, departments] = await Promise.all([ fetchData(employeesSheetName), fetchData(departmentsSheetName) ]);
-                const employee = employees.find(emp => emp.id === employeeIdToFind);
-
-                if (!employee) { return showError(`لم يتم العثور على موظف بالرقم التعريفي ${employeeIdToFind}`); }
                 
-                const department = departments.find(dept => dept.id === employee.department_id);
+                if (employees.length === 0) { return showError("فشل تحميل بيانات الموظفين. تأكد من صحة الرابط ومن أن ورقة 'employees' تحتوي على بيانات.");}
+
+                const employee = employees.find(emp => emp.id && emp.id.trim() === employeeIdToFind.trim());
+
+                if (!employee) { return showError(`لم يتم العثور على موظف بالرقم التعريفي (id) ${employeeIdToFind} في قاعدة البيانات.`); }
+                
+                const department = departments.find(dept => dept.id && employee.department_id && dept.id.trim() === employee.department_id.trim());
                 
                 populatePage(employee, department);
             } catch (error) {
@@ -115,35 +120,21 @@
         }
         
         function populatePage(employee, department) {
-            // === إصلاح المشاكل الثلاث هنا ===
-
-            // 1. يعرض الرقم الوظيفي الصحيح employee_id
-            document.getElementById('employee-id').textContent = employee.employee_id || 'غير محدد';
-            
-            // 2. يعرض نص التخويل الديناميكي
-            // إذا لم يجد نصاً، يعرض رسالة افتراضية
-            const defaultAuthText = "مخول بالقيام بالمهام الموكلة إليه من قبل الشركة.";
-            document.getElementById('auth-text-placeholder').textContent = employee.auth_text || defaultAuthText;
-
-            // 3. يعرض اسم القسم أو رسالة بديلة إذا لم يجده (أكثر تسامحاً)
-            document.getElementById('department-name').textContent = department ? (department.name || 'قسم غير معرف') : 'قسم غير محدد';
-            
-            // باقي البيانات
             document.getElementById('employee-name').textContent = employee.name || 'اسم غير متوفر';
             document.getElementById('employee-photo').src = employee.photo_url || '';
             document.getElementById('employee-job-title').textContent = employee.title || 'وظيفة غير متوفرة';
+            document.getElementById('employee-id').textContent = employee.employee_id || 'غير محدد';
+            document.getElementById('auth-text-placeholder').textContent = employee.auth_text || "مخول بالقيام بالمهام الموكلة إليه.";
+            document.getElementById('department-name').textContent = department ? (department.name || 'قسم غير معرف') : 'قسم غير محدد';
             document.title = `هوية تحقق - ${employee.name || 'موظف'}`;
             
-            // إظهار المحتوى
             document.getElementById('loader').style.display = 'none';
             document.getElementById('employee-content').style.display = 'block';
-            document.getElementById('profile-card').classList.add('visible');
         }
 
         function showError(message) {
             const loader = document.getElementById('loader');
-            loader.innerHTML = `<i class="fas fa-exclamation-triangle"></i><p style="padding: 0 10px;">${message}</p>`;
-            document.getElementById('profile-card').classList.add('visible');
+            loader.innerHTML = `<div style="padding:20px; color: #d9534f; background: #f2dede; border-radius:10px; border:1px solid #ebccd1;"><i class="fas fa-exclamation-triangle"></i><p style="font-weight:bold; margin-top:10px;">خطأ في عرض البيانات</p><p style="font-size:0.9em;">${message}</p></div>`;
         }
         
         document.addEventListener('DOMContentLoaded', main);
